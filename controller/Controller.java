@@ -46,7 +46,7 @@ public class Controller {
 
     private void binaryTreeTesting() {
 
-        Node<Integer> binaryTreeRoot = null;
+        Node binaryTreeRoot = null;
         String bracketNotation = "";
         _output = "None.";
         boolean running = true;
@@ -72,9 +72,10 @@ public class Controller {
                     }
                     break;
                 case "2":
-                    TreeTraversal.clearAnswer();
+                    RecursiveTraversal.clearAnswer();
                     if (binaryTreeRoot != null) {
-                        _output = "\n\nBracket notation: " + bracketNotation + "\n\nTraversal: " + TreeTraversal.inorderTraversal(binaryTreeRoot) + "\n\n";
+                        _output = "\n\nBracket notation: " + bracketNotation + "\n\nTraversal: "
+                                + RecursiveTraversal.inorderTraversal(binaryTreeRoot) + "\n\n";
                     } else {
                         _output = "Tree is not set.";
                     }
@@ -91,6 +92,8 @@ public class Controller {
     }
 
     private void AVLTreeTesting() {
+
+        AVLTree avlTree = new AVLTree();
         _output = "None.";
         boolean running = true;
 
@@ -98,22 +101,34 @@ public class Controller {
             clearScreen();
             System.out.println("Output: " + _output);
             System.out.println("Choose an option:");
-            System.out.println("1. Initialize tree");
-            System.out.println("2. Add");
-            System.out.println("3. Remove");
-            System.out.println("4. Search");
-            System.out.println("5. Breadth traversal");
-            System.out.println("6. Depth Traversal");
-            System.out.println("7. Exit");
+            System.out.println("1. Add");
+            System.out.println("2. Remove");
+            System.out.println("3. Search");
+            System.out.println("4. Breadth traversal");
+            System.out.println("5. Depth Traversal");
+            System.out.println("6. Exit");
             System.out.print("Input: ");
             String choice = _scanner.nextLine();
             switch (choice) {
                 case "1":
                     System.out.print("Input element: ");
-                    Node<String> node = new Node<>(_scanner.nextLine());
-                    AVLTree<String> avlTree = new AVLTree<>(node);
+                    int input = Integer.parseInt(_scanner.nextLine());
+                    try {
+                        avlTree.insert(new Node(input), input);
+                    } catch (RuntimeException e) {
+                        _output = "No duplicate keys allowed.";
+                    }
                     break;
-                case "7":
+                case "2":
+
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
                     running = false;
                     _output = "None.";
                     break;

@@ -6,19 +6,19 @@ import trees.Node;
 
 public class BracketNotationParser {
 
-    public static Node<Integer> parseBracketNotation(String s) {
+    public static Node parseBracketNotation(String s) {
         if (s.isEmpty()) {
             return null;
         }
 
-        Stack<Node<Integer>> stack = new Stack<>();
-        Node<Integer> root = null;
+        Stack<Node> stack = new Stack<>();
+        Node root = null;
 
         for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
-                Node<Integer> node = new Node<>(Character.getNumericValue(c));
+                Node node = new Node(Character.getNumericValue(c));
                 if (!stack.isEmpty()) {
-                    Node<Integer> parent = stack.peek();
+                    Node parent = stack.peek();
                     if (parent.left == null) {
                         parent.left = node;
                     } else {

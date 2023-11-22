@@ -1,16 +1,13 @@
 package trees;
 
-public class Node<T> {
+public class Node {
 
-    private T _data;
-    public Node<T> left, right, parent;
+    protected int height;
+    public int data;
+    public Node left, right, parent;
 
-    public Node(T data) {
-        _data = data;
+    public Node(int data) {
+        this.data = data;
         left = right = null;
-    }
-
-    public T getData() {
-        return _data;
     }
 }
