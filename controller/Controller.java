@@ -4,6 +4,7 @@ import trees.AVLTree;
 import trees.Node;
 import algorithms.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Controller {
@@ -23,7 +24,7 @@ public class Controller {
             System.out.println("Choose a tree to test:");
             System.out.println("1. Binary Tree");
             System.out.println("2. AVL-Tree");
-            System.out.println("3. Exit");
+            System.out.println("0. Exit");
             System.out.print("Input: ");
             String choice = _scanner.nextLine();
             switch (choice) {
@@ -33,7 +34,7 @@ public class Controller {
                 case "2":
                     AVLTreeTesting();
                     break;
-                case "3":
+                case "0":
                     System.out.println("Exiting program.");
                     _scanner.close();
                     System.exit(0);
@@ -56,8 +57,8 @@ public class Controller {
             System.out.println("Output: " + _output);
             System.out.println("Choose an option:");
             System.out.println("1. Parse bracket notation");
-            System.out.println("2. Traverse inorder");
-            System.out.println("3. Exit");
+            System.out.println("2. Traverse in-order");
+            System.out.println("0. Exit");
             System.out.print("Input: ");
             String choice = _scanner.nextLine();
             switch (choice) {
@@ -80,7 +81,7 @@ public class Controller {
                         _output = "Tree is not set.";
                     }
                     break;
-                case "3":
+                case "0":
                     running = false;
                     _output = "None.";
                     break;
@@ -94,6 +95,8 @@ public class Controller {
     private void AVLTreeTesting() {
 
         AVLTree avlTree = new AVLTree();
+        int input;
+        String traversal;
         _output = "None.";
         boolean running = true;
 
@@ -101,39 +104,97 @@ public class Controller {
             clearScreen();
             System.out.println("Output: " + _output);
             System.out.println("Choose an option:");
-            System.out.println("1. Add");
-            System.out.println("2. Remove");
+            System.out.println("1. Insert");
+            System.out.println("2. Delete");
             System.out.println("3. Search");
             System.out.println("4. Breadth traversal");
-            System.out.println("5. Depth Traversal");
-            System.out.println("6. Exit");
+            System.out.println("5. Depth traversal");
+            System.out.println("0. Exit");
             System.out.print("Input: ");
             String choice = _scanner.nextLine();
             switch (choice) {
                 case "1":
-                    System.out.print("Input element: ");
-                    int input = Integer.parseInt(_scanner.nextLine());
+                    System.out.print("Input key to insert: ");
+                    input = Integer.parseInt(_scanner.nextLine());
                     try {
-                        avlTree.insert(new Node(input), input);
-                    } catch (RuntimeException e) {
-                        _output = "No duplicate keys allowed.";
+                        avlTree.insert(input);
+                        _output = "Key inserted.";
+                    } catch (InputMismatchException e) {
+                        _output = "Duplicate keys are not allowed.";
                     }
                     break;
                 case "2":
-
+                    System.out.print("Input key to delete: ");
+                    input = Integer.parseInt(_scanner.nextLine());
+                    try {
+                        avlTree.delete(input);
+                        _output = "Key deleted.";
+                    } catch (RuntimeException e) {
+                        _output = "Key not found.";
+                    }
                     break;
                 case "3":
+                    System.out.print("Input key to search: ");
+                    input = Integer.parseInt(_scanner.nextLine());
+                    if (avlTree.search(input) != null) {
+                        _output = "Key found.";
+                    } else {
+                        _output = "Key not found.";
+                    }
                     break;
                 case "4":
+                    traversal = IterativeTraversal.BFS(avlTree.getRoot());
+                    _output = traversal != "" ? traversal : "Tree is empty.";
                     break;
                 case "5":
+                    depthTraversalTesting(avlTree);
                     break;
-                case "6":
+                case "0":
                     running = false;
                     _output = "None.";
                     break;
                 default:
                     _output = "Invalid choice.";
+                    break;
+            }
+        }
+    }
+
+    private void depthTraversalTesting(AVLTree avlTree) {
+
+        String traversal = "";
+        _output = "None.";
+        boolean running = true;
+
+        while (running) {
+            clearScreen();
+            System.out.println("Output: " + _output);
+            System.out.println("Choose order of depth traversal:");
+            System.out.println("1. Pre-order");
+            System.out.println("2. In-order");
+            System.out.println("3. Post-order");
+            System.out.println("0. Exit");
+            System.out.print("Input: ");
+            String choice = _scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    traversal = IterativeTraversal.preorderDFS(avlTree.getRoot());
+                    _output = traversal != "" ? traversal : "Tree is empty.";
+                    break;
+                case "2":
+                    traversal = IterativeTraversal.inorderDFS(avlTree.getRoot());
+                    _output = traversal != "" ? traversal : "Tree is empty.";
+                    break;
+                case "3":
+                    traversal = IterativeTraversal.postorderDFS(avlTree.getRoot());
+                    _output = traversal != "" ? traversal : "Tree is empty.";
+                    break;
+                case "0":
+                    running = false;
+                    _output = "None.";
+                    break;
+                default:
+                    _output = "Invalid input.";
                     break;
             }
         }
